@@ -1,145 +1,293 @@
+
 <!DOCTYPE html>
 <html lang="ms">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Fizik SPM | MRSM Mukah</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background: #f0f5fc;
-      color: #183153;
-      line-height: 1.6;
-    }
-    header {
-      background: #073b78;
-      color: white;
-      text-align: center;
-      padding: 28px 16px;
-    }
-    main {
-      max-width: 760px;
-      margin: 20px auto;
-      padding: 0 14px;
-    }
-    section {
-      background: white;
-      padding: 20px;
-      margin-bottom: 16px;
-      border-radius: 14px;
-      box-shadow: 0 3px 12px #18315312;
-    }
-    h2 { color: #0754a6; }
-    .formula {
-      background: #e7f1ff;
-      padding: 12px;
-      border-radius: 8px;
-      font-size: 1.15em;
-      font-weight: bold;
-    }
-    button {
-      background: #0754a6;
-      color: white;
-      border: 0;
-      border-radius: 8px;
-      padding: 12px 18px;
-      cursor: pointer;
-      font-size: 1em;
-    }
-    button:hover { background: #00376f; }
-    label { display: block; margin: 8px 0; }
-    #result {
-      font-weight: bold;
-      margin-top: 14px;
-    }
-    footer {
-      text-align: center;
-      padding: 20px;
-      color: #52657d;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portal Fizik SPM | MRSM Mukah</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #eef4fb;
+  color: #183153;
+  line-height: 1.6;
+}
+header {
+  background: #073b78;
+  color: white;
+  padding: 28px 16px;
+  text-align: center;
+}
+header h1 { margin: 5px 0; }
+main { max-width: 850px; margin: 22px auto; padding: 0 14px; }
+section, .menu {
+  background: white;
+  border-radius: 14px;
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 3px 12px #18315312;
+}
+.menu { display: flex; flex-wrap: wrap; gap: 8px; }
+button {
+  border: 0;
+  border-radius: 8px;
+  padding: 11px 15px;
+  background: #0754a6;
+  color: white;
+  cursor: pointer;
+  font-size: 15px;
+}
+button:hover { background: #00376f; }
+button:focus-visible, input:focus-visible {
+  outline: 3px solid #f0ad35;
+  outline-offset: 3px;
+}
+h2 { color: #0754a6; }
+.formula {
+  background: #e7f1ff;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: bold;
+}
+.question {
+  border-top: 1px solid #dce5ef;
+  padding: 12px 0;
+}
+.option { display: block; margin: 8px 0; }
+#result { font-weight: bold; }
+footer { text-align: center; padding: 22px; color: #52657d; }
+</style>
 </head>
-<body>
-  <header>
-    <p>MRSM MUKAH • ASPIRE 2026</p>
-    <h1>Jom Kuasai Fizik SPM!</h1>
-    <p>Fahami konsep • Kuasai formula • Latih tubi</p>
-  </header>
 
-  <main>
-    <section>
-      <h2>📘 Nota: Hukum Ohm</h2>
-      <p>Hukum Ohm menyatakan bahawa arus elektrik
-      berkadar terus dengan beza keupayaan jika
-      suhu dan keadaan fizikal konduktor kekal.</p>
+<body>
+<header>
+  <p>MRSM MUKAH • ASPIRE 2026</p>
+  <h1>Portal Fizik SPM</h1>
+  <p>Nota ringkas • Kuiz • Penguasaan topik</p>
+</header>
+
+<main>
+  <section>
+    <h2>Selamat datang!</h2>
+    <p>Pilih topik, baca nota dan jawab kuiz.
+    Cuba dapatkan semua jawapan yang betul!</p>
+  </section>
+
+  <div class="menu" aria-label="Pilih topik Fizik">
+    <button data-topic="haba">Haba</button>
+    <button data-topic="gelombang">Gelombang</button>
+    <button data-topic="elektrik">Elektrik</button>
+    <button data-topic="nuklear">Fizik Nuklear</button>
+  </div>
+
+  <section id="nota" aria-live="polite"></section>
+  <section id="latihan"></section>
+</main>
+
+<footer>
+  Bahan pembelajaran Fizik SPM • MRSM Mukah
+</footer>
+
+<script>
+const topik = {
+  haba: {
+    nama: "Haba",
+    nota: `
+      <h2>Nota Ringkas: Haba</h2>
+      <p>Muatan haba tentu ialah kuantiti haba yang diperlukan
+      untuk menaikkan suhu 1 kg bahan sebanyak 1°C.</p>
+      <p class="formula">Q = mcΔθ</p>
+      <ul>
+        <li>Q: tenaga haba, joule (J)</li>
+        <li>m: jisim, kilogram (kg)</li>
+        <li>c: muatan haba tentu, J kg⁻¹ °C⁻¹</li>
+        <li>Δθ: perubahan suhu, °C</li>
+      </ul>
+      <p><b>Ingat:</b> Suhu akhir tolak suhu awal
+      memberikan perubahan suhu.</p>`,
+    soalan: [
+      {
+        q: "Apakah unit SI bagi tenaga haba?",
+        pilihan: ["Watt", "Joule", "Kelvin"],
+        betul: 1,
+        sebab: "Tenaga haba diukur dalam joule (J)."
+      },
+      {
+        q: "Apabila jisim dan perubahan suhu meningkat, dengan c tetap, apakah berlaku kepada Q?",
+        pilihan: ["Q meningkat", "Q sentiasa sifar", "Q berkurang"],
+        betul: 0,
+        sebab: "Daripada Q = mcΔθ, Q berkadar dengan m dan Δθ."
+      }
+    ]
+  },
+
+  gelombang: {
+    nama: "Gelombang",
+    nota: `
+      <h2>Nota Ringkas: Gelombang</h2>
+      <p>Gelombang memindahkan tenaga dari satu tempat
+      ke tempat lain tanpa pemindahan jirim secara keseluruhan.</p>
+      <p class="formula">v = fλ</p>
+      <ul>
+        <li>v: laju gelombang (m s⁻¹)</li>
+        <li>f: frekuensi (Hz)</li>
+        <li>λ: panjang gelombang (m)</li>
+      </ul>
+      <p><b>Ingat:</b> Frekuensi ialah bilangan ayunan
+      lengkap sesaat.</p>`,
+    soalan: [
+      {
+        q: "Apakah unit SI bagi frekuensi?",
+        pilihan: ["Hertz", "Meter", "Meter sesaat"],
+        betul: 0,
+        sebab: "Frekuensi diukur dalam hertz (Hz)."
+      },
+      {
+        q: "Gelombang mempunyai frekuensi 5 Hz dan panjang gelombang 2 m. Berapakah lajunya?",
+        pilihan: ["2.5 m s⁻¹", "7 m s⁻¹", "10 m s⁻¹"],
+        betul: 2,
+        sebab: "v = fλ = 5 × 2 = 10 m s⁻¹."
+      }
+    ]
+  },
+
+  elektrik: {
+    nama: "Elektrik",
+    nota: `
+      <h2>Nota Ringkas: Elektrik</h2>
+      <p>Hukum Ohm menghubungkan beza keupayaan,
+      arus dan rintangan apabila suhu serta keadaan
+      fizikal konduktor kekal.</p>
       <p class="formula">V = IR</p>
       <ul>
-        <li>V = beza keupayaan (volt, V)</li>
-        <li>I = arus elektrik (ampere, A)</li>
-        <li>R = rintangan (ohm, Ω)</li>
+        <li>V: beza keupayaan (volt, V)</li>
+        <li>I: arus elektrik (ampere, A)</li>
+        <li>R: rintangan (ohm, Ω)</li>
       </ul>
-    </section>
-
-    <section>
-      <h2>🧠 Kuiz Mini Fizik</h2>
-      <p>Jawab semua soalan, kemudian klik Semak Jawapan.</p>
-
-      <p><b>1. Apakah unit SI bagi arus elektrik?</b></p>
-      <label><input type="radio" name="q1" value="A"> Volt</label>
-      <label><input type="radio" name="q1" value="B"> Ampere</label>
-      <label><input type="radio" name="q1" value="C"> Ohm</label>
-
-      <p><b>2. Jika V = 12 V dan R = 4 Ω,
-      berapakah arus I?</b></p>
-      <label><input type="radio" name="q2" value="A"> 3 A</label>
-      <label><input type="radio" name="q2" value="B"> 8 A</label>
-      <label><input type="radio" name="q2" value="C"> 48 A</label>
-
-      <p><b>3. Apakah alat untuk mengukur arus?</b></p>
-      <label><input type="radio" name="q3" value="A"> Voltmeter</label>
-      <label><input type="radio" name="q3" value="B"> Termometer</label>
-      <label><input type="radio" name="q3" value="C"> Ammeter</label>
-
-      <button onclick="semakKuiz()">Semak Jawapan</button>
-      <p id="result" aria-live="polite"></p>
-    </section>
-  </main>
-
-  <footer>
-    Bahan pembelajaran Fizik SPM • MRSM Mukah
-  </footer>
-
-  <script>
-    function semakKuiz() {
-      const jawapan = { q1: "B", q2: "A", q3: "C" };
-      let markah = 0;
-      let belumJawab = 0;
-
-      for (const soalan in jawapan) {
-        const pilihan = document.querySelector(
-          'input[name="' + soalan + '"]:checked'
-        );
-        if (!pilihan) {
-          belumJawab++;
-        } else if (pilihan.value === jawapan[soalan]) {
-          markah++;
-        }
+      <p><b>Ingat:</b> Ammeter disambung secara siri;
+      voltmeter disambung secara selari.</p>`,
+    soalan: [
+      {
+        q: "Apakah alat untuk mengukur arus elektrik?",
+        pilihan: ["Voltmeter", "Ammeter", "Termometer"],
+        betul: 1,
+        sebab: "Ammeter digunakan untuk mengukur arus elektrik."
+      },
+      {
+        q: "Rintangan 4 Ω disambung pada beza keupayaan 12 V. Berapakah arus?",
+        pilihan: ["3 A", "8 A", "48 A"],
+        betul: 0,
+        sebab: "I = V/R = 12/4 = 3 A."
       }
+    ]
+  },
 
-      const result = document.getElementById("result");
-      if (belumJawab > 0) {
-        result.textContent =
-          "Sila jawab semua soalan dahulu. Belum dijawab: "
-          + belumJawab;
-      } else {
-        result.textContent =
-          "Markah anda: " + markah + "/3 (" +
-          Math.round(markah / 3 * 100) + "%). " +
-          (markah === 3 ? "Tahniah! Cemerlang!" :
-          "Semak nota dan cuba lagi!");
+  nuklear: {
+    nama: "Fizik Nuklear",
+    nota: `
+      <h2>Nota Ringkas: Fizik Nuklear</h2>
+      <p>Radioaktiviti ialah proses spontan nukleus
+      tidak stabil memancarkan sinaran.</p>
+      <ul>
+        <li>Alfa: zarah yang terdiri daripada 2 proton
+        dan 2 neutron.</li>
+        <li>Beta: dalam pereputan beta negatif, neutron
+        bertukar menjadi proton dan elektron dipancarkan.</li>
+        <li>Gama: sinaran elektromagnet bertenaga tinggi.</li>
+      </ul>
+      <p><b>Ingat:</b> Sinaran alfa mempunyai kuasa
+      penembusan yang rendah berbanding beta dan gama.</p>`,
+    soalan: [
+      {
+        q: "Sinaran manakah terdiri daripada 2 proton dan 2 neutron?",
+        pilihan: ["Alfa", "Beta negatif", "Gama"],
+        betul: 0,
+        sebab: "Zarah alfa mempunyai 2 proton dan 2 neutron."
+      },
+      {
+        q: "Antara berikut, yang manakah sinaran elektromagnet?",
+        pilihan: ["Alfa", "Beta", "Gama"],
+        betul: 2,
+        sebab: "Sinar gama ialah sinaran elektromagnet."
       }
+    ]
+  }
+};
+
+let semasa = "haba";
+
+function paparTopik(id) {
+  semasa = id;
+  document.getElementById("nota").innerHTML =
+    topik[id].nota;
+
+  const ruang = document.getElementById("latihan");
+  ruang.innerHTML =
+    "<h2>Kuiz: " + topik[id].nama + "</h2>" +
+    "<p>Pilih satu jawapan bagi setiap soalan.</p>" +
+    topik[id].soalan.map((s, i) => `
+      <div class="question">
+        <p><b>${i + 1}. ${s.q}</b></p>
+        ${s.pilihan.map((p, j) => `
+          <label class="option">
+            <input type="radio" name="jawapan${i}" value="${j}">
+            ${p}
+          </label>
+        `).join("")}
+        <p id="maklum${i}"></p>
+      </div>
+    `).join("") +
+    '<button id="semak">Semak Jawapan</button>' +
+    '<p id="result" aria-live="polite"></p>';
+
+  document.getElementById("semak").addEventListener(
+    "click", semakKuiz
+  );
+}
+
+function semakKuiz() {
+  const soalan = topik[semasa].soalan;
+  let markah = 0;
+  let belum = 0;
+
+  soalan.forEach((s, i) => {
+    const dipilih = document.querySelector(
+      'input[name="jawapan' + i + '"]:checked'
+    );
+    const maklum = document.getElementById("maklum" + i);
+
+    if (!dipilih) {
+      belum++;
+      maklum.textContent = "Belum dijawab.";
+    } else if (Number(dipilih.value) === s.betul) {
+      markah++;
+      maklum.textContent = "Betul! " + s.sebab;
+    } else {
+      maklum.textContent =
+        "Belum tepat. Jawapan: " +
+        s.pilihan[s.betul] + ". " + s.sebab;
     }
-  </script>
+  });
+
+  const result = document.getElementById("result");
+  if (belum > 0) {
+    result.textContent =
+      "Sila jawab semua soalan. Belum dijawab: " + belum;
+  } else {
+    result.textContent =
+      "Markah " + topik[semasa].nama + ": " +
+      markah + "/" + soalan.length + " (" +
+      Math.round(markah / soalan.length * 100) + "%).";
+  }
+}
+
+document.querySelectorAll("[data-topic]").forEach(b => {
+  b.addEventListener("click", () => paparTopik(b.dataset.topic));
+});
+
+paparTopik("haba");
+</script>
 </body>
 </html>
