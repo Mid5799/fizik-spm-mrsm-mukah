@@ -3,291 +3,367 @@
 <html lang="ms">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Portal Fizik SPM | MRSM Mukah</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fizik SPM | MRSM Mukah</title>
 <style>
-* { box-sizing: border-box; }
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #eef4fb;
-  color: #183153;
-  line-height: 1.6;
-}
-header {
-  background: #073b78;
-  color: white;
-  padding: 28px 16px;
-  text-align: center;
-}
-header h1 { margin: 5px 0; }
-main { max-width: 850px; margin: 22px auto; padding: 0 14px; }
-section, .menu {
-  background: white;
-  border-radius: 14px;
-  padding: 20px;
-  margin-bottom: 16px;
-  box-shadow: 0 3px 12px #18315312;
-}
-.menu { display: flex; flex-wrap: wrap; gap: 8px; }
-button {
-  border: 0;
-  border-radius: 8px;
-  padding: 11px 15px;
-  background: #0754a6;
-  color: white;
-  cursor: pointer;
-  font-size: 15px;
-}
-button:hover { background: #00376f; }
-button:focus-visible, input:focus-visible {
-  outline: 3px solid #f0ad35;
-  outline-offset: 3px;
-}
-h2 { color: #0754a6; }
-.formula {
-  background: #e7f1ff;
-  padding: 12px;
-  border-radius: 8px;
-  font-weight: bold;
-}
-.question {
-  border-top: 1px solid #dce5ef;
-  padding: 12px 0;
-}
-.option { display: block; margin: 8px 0; }
-#result { font-weight: bold; }
-footer { text-align: center; padding: 22px; color: #52657d; }
+:root{--biru:#064a9b;--biru2:#0b70c9;--cerah:#eaf4ff;--hijau:#16804a;--merah:#b42318;--kelabu:#64748b}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f3f7fc;color:#172033;line-height:1.55}
+header{background:linear-gradient(120deg,#063575,#0877c9);color:white;padding:26px 16px;text-align:center}
+header h1{margin:0;font-size:clamp(23px,4vw,34px)}
+header p{margin:6px 0 0}
+main{max-width:1100px;margin:auto;padding:18px}
+.panel{background:white;border-radius:14px;padding:18px;margin-bottom:18px;box-shadow:0 3px 12px #102a4310}
+h2{color:var(--biru);margin-top:0}
+select,input{padding:11px;border:1px solid #cbd5e1;border-radius:8px;font-size:16px;width:100%;margin:5px 0 12px}
+button{border:0;border-radius:8px;padding:11px 15px;background:var(--biru);color:white;font-weight:bold;cursor:pointer;margin:4px 3px 4px 0}
+button:hover{background:var(--biru2)}
+button.secondary{background:#e2e8f0;color:#172033}
+button:disabled{opacity:.5;cursor:not-allowed}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+.topic{border:1px solid #dbe5f0;border-radius:10px;padding:13px;background:#fff}
+.topic h3{margin:0 0 5px;font-size:16px}
+.small{font-size:13px;color:var(--kelabu)}
+.tag{display:inline-block;padding:3px 8px;border-radius:99px;background:var(--cerah);color:var(--biru);font-size:12px;font-weight:bold}
+.progress{height:9px;background:#e2e8f0;border-radius:10px;overflow:hidden;margin:8px 0}
+.progress span{display:block;height:100%;background:#16804a;width:0}
+.option{display:block;width:100%;text-align:left;margin:8px 0;background:#f1f5f9;color:#172033;border:1px solid #dbe5f0}
+.option.chosen{border:2px solid var(--biru);background:#eaf4ff}
+.feedback{padding:12px;border-radius:8px;margin-top:10px;background:#f1f5f9}
+.good{color:var(--hijau);font-weight:bold}.bad{color:var(--merah);font-weight:bold}
+.hidden{display:none}
+footer{text-align:center;color:var(--kelabu);padding:20px;font-size:13px}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:9px;border-bottom:1px solid #e2e8f0}
+@media(max-width:600px){main{padding:10px}.panel{padding:13px}}
 </style>
 </head>
-
 <body>
 <header>
-  <p>MRSM MUKAH • ASPIRE 2026</p>
-  <h1>Portal Fizik SPM</h1>
-  <p>Nota ringkas • Kuiz • Penguasaan topik</p>
+  <h1>FIZIK SPM MRSM MUKAH</h1>
+  <p>Nota • Latihan • Skema Jawapan • Rekod Penguasaan</p>
+  <p class="small" style="color:#eaf4ff">Belajar sedikit demi sedikit, kuasai satu topik pada satu masa.</p>
 </header>
 
 <main>
-  <section>
-    <h2>Selamat datang!</h2>
-    <p>Pilih topik, baca nota dan jawab kuiz.
-    Cuba dapatkan semua jawapan yang betul!</p>
-  </section>
+<section class="panel">
+  <h2>👤 Profil pelajar</h2>
+  <label for="nama">Nama pelajar</label>
+  <input id="nama" placeholder="Masukkan nama anda">
+  <label for="kelas">Kelas</label>
+  <input id="kelas" placeholder="Contoh: 5 Ibnu Sina">
+  <button onclick="simpanProfil()">Simpan profil</button>
+  <span id="profilMsg" class="small"></span>
+  <p class="small">Profil dan rekod disimpan pada pelayar/peranti ini sahaja. Gunakan peranti dan pelayar yang sama untuk melihat rekod terdahulu.</p>
+</section>
 
-  <div class="menu" aria-label="Pilih topik Fizik">
-    <button data-topic="haba">Haba</button>
-    <button data-topic="gelombang">Gelombang</button>
-    <button data-topic="elektrik">Elektrik</button>
-    <button data-topic="nuklear">Fizik Nuklear</button>
+<section class="panel">
+  <h2>📚 Pilih topik</h2>
+  <label for="pilihTopik">Tingkatan dan bab</label>
+  <select id="pilihTopik" onchange="paparTopik()"></select>
+  <div id="nota"></div>
+  <button onclick="mulaKuiz()">Mula latihan topik</button>
+</section>
+
+<section class="panel hidden" id="ruangKuiz">
+  <div class="small" id="nomborSoalan"></div>
+  <div class="progress"><span id="barKuiz"></span></div>
+  <h2 id="soalan"></h2>
+  <div id="pilihan"></div>
+  <div id="maklumBalas" class="feedback hidden"></div>
+  <button id="semakBtn" onclick="semakJawapan()">Semak jawapan</button>
+  <button id="seterusnyaBtn" class="hidden" onclick="seterusnya()">Soalan seterusnya →</button>
+</section>
+
+<section class="panel hidden" id="keputusan">
+  <h2>🎯 Keputusan latihan</h2>
+  <div id="ringkasanKeputusan"></div>
+  <button onclick="mulaKuiz()">Cuba lagi</button>
+  <button class="secondary" onclick="tutupKuiz()">Kembali ke nota</button>
+</section>
+
+<section class="panel">
+  <h2>📈 Rekod penguasaan saya</h2>
+  <p class="small">Status berdasarkan markah latihan tertinggi yang direkodkan bagi setiap bab.</p>
+  <div id="ringkasanRekod"></div>
+  <div style="overflow-x:auto">
+    <table>
+      <thead><tr><th>Topik</th><th>Markah terbaik</th><th>Status</th></tr></thead>
+      <tbody id="jadualRekod"></tbody>
+    </table>
   </div>
-
-  <section id="nota" aria-live="polite"></section>
-  <section id="latihan"></section>
+  <button class="secondary" onclick="muatTurunRekod()">Muat turun rekod CSV</button>
+  <button class="secondary" onclick="resetRekod()">Padam rekod pada peranti ini</button>
+</section>
 </main>
-
-<footer>
-  Bahan pembelajaran Fizik SPM • MRSM Mukah
-</footer>
+<footer>Portal pembelajaran Fizik SPM • MRSM Mukah • Bahan latihan kendiri</footer>
 
 <script>
-const topik = {
-  haba: {
-    nama: "Haba",
-    nota: `
-      <h2>Nota Ringkas: Haba</h2>
-      <p>Muatan haba tentu ialah kuantiti haba yang diperlukan
-      untuk menaikkan suhu 1 kg bahan sebanyak 1°C.</p>
-      <p class="formula">Q = mcΔθ</p>
-      <ul>
-        <li>Q: tenaga haba, joule (J)</li>
-        <li>m: jisim, kilogram (kg)</li>
-        <li>c: muatan haba tentu, J kg⁻¹ °C⁻¹</li>
-        <li>Δθ: perubahan suhu, °C</li>
-      </ul>
-      <p><b>Ingat:</b> Suhu akhir tolak suhu awal
-      memberikan perubahan suhu.</p>`,
-    soalan: [
-      {
-        q: "Apakah unit SI bagi tenaga haba?",
-        pilihan: ["Watt", "Joule", "Kelvin"],
-        betul: 1,
-        sebab: "Tenaga haba diukur dalam joule (J)."
-      },
-      {
-        q: "Apabila jisim dan perubahan suhu meningkat, dengan c tetap, apakah berlaku kepada Q?",
-        pilihan: ["Q meningkat", "Q sentiasa sifar", "Q berkurang"],
-        betul: 0,
-        sebab: "Daripada Q = mcΔθ, Q berkadar dengan m dan Δθ."
-      }
-    ]
-  },
+const topik = [
+{
+tingkatan:4,nama:"1. Pengukuran",
+nota:"Fizik menggunakan kuantiti fizik, unit piawai dan alat pengukuran. Kuantiti asas termasuk panjang, jisim, masa, suhu dan arus elektrik. Semak unit, kejituan, kejituan alat dan ralat bacaan.",
+formula:"Ketumpatan: ρ = m/V • Halaju purata = jarak/masa",
+qs:[
+["Apakah unit SI bagi panjang?","Sentimeter","Meter","Kilometer","Milimeter",1,"Unit SI bagi panjang ialah meter (m).","Unit SI bagi panjang ialah kilogram."],
+["Apakah alat yang sesuai untuk mengukur diameter wayar yang sangat halus?","Pembaris meter","Jam randik","Tolok skru mikrometer","Neraca",2,"Tolok skru mikrometer sesuai untuk diameter kecil.","Tolok skru mikrometer digunakan untuk mengukur masa."],
+["Sebuah objek berjisim 200 g mempunyai isi padu 50 cm³. Berapakah ketumpatannya?","2 g cm⁻³","4 g cm⁻³","10 g cm⁻³","250 g cm⁻³",1,"ρ = m/V = 200/50 = 4 g cm⁻³.","Ketumpatan objek ialah 0.25 g cm⁻³."],
+["Berapakah 2.5 km dalam meter?","25 m","250 m","2 500 m","25 000 m",2,"1 km = 1 000 m; 2.5 km = 2 500 m.","2.5 km bersamaan 250 m."],
+["Apakah maksud ralat sifar bagi alat pengukuran?","Alat tidak mempunyai skala","Alat menunjukkan bacaan bukan sifar apabila nilai sebenar sifar","Semua bacaan tepat","Alat mengukur suhu",1,"Ralat sifar ialah bacaan bukan sifar ketika nilai sebenar sifar.","Ralat sifar bermaksud setiap bacaan semestinya tepat."]
+]},
+{
+tingkatan:4,nama:"2. Daya dan Gerakan I",
+nota:"Kajian gerakan melibatkan jarak, sesaran, laju, halaju dan pecutan. Daya paduan boleh mengubah gerakan objek. Hukum Newton menerangkan hubungan daya, jisim dan pecutan.",
+formula:"Laju = jarak/masa • a = (v − u)/t • F = ma",
+qs:[
+["Apakah unit SI bagi pecutan?","m s⁻¹","m s⁻²","N kg⁻¹","kg m",1,"Unit pecutan ialah m s⁻².","Unit SI bagi pecutan ialah m s⁻¹ sahaja."],
+["Halaju berubah daripada 5 m s⁻¹ kepada 17 m s⁻¹ dalam 4 s. Berapakah pecutan?","2 m s⁻²","3 m s⁻²","4 m s⁻²","5 m s⁻²",1,"a = (v − u)/t = (17 − 5)/4 = 3 m s⁻².","Pecutan ialah 12 m s⁻²."],
+["Daya paduan pada objek berjisim 2 kg ialah 10 N. Berapakah pecutannya?","2 m s⁻²","5 m s⁻²","10 m s⁻²","20 m s⁻²",1,"F = ma, maka a = 10/2 = 5 m s⁻².","Pecutan ialah 20 m s⁻²."],
+["Apakah yang dinyatakan oleh Hukum Newton Pertama?","F = ma","Tenaga sentiasa hilang","Objek mengekalkan keadaan gerakannya jika daya paduan sifar","Berat sama dengan jisim",2,"Daya paduan sifar mengekalkan keadaan rehat atau halaju seragam.","Objek mesti memecut walaupun daya paduan sifar."],
+["Apakah unit SI bagi momentum?","kg m s⁻¹","kg m s⁻²","N m⁻¹","J s⁻²",0,"Momentum = jisim × halaju; unitnya kg m s⁻¹.","Unit momentum ialah kg m s⁻²."]
+]},
+{
+tingkatan:4,nama:"3. Kegravitian",
+nota:"Daya graviti ialah daya tarikan antara objek berjisim. Berat ialah daya graviti pada objek. Medan graviti menerangkan daya graviti per unit jisim.",
+formula:"Berat, W = mg • g = W/m",
+qs:[
+["Apakah unit SI bagi berat?","kg","N","J","W",1,"Berat ialah daya, maka unitnya newton (N).","Berat diukur dalam kilogram."],
+["Objek berjisim 5 kg berada di tempat g = 10 N kg⁻¹. Berapakah beratnya?","0.5 N","5 N","15 N","50 N",3,"W = mg = 5 × 10 = 50 N.","Berat objek ialah 15 N."],
+["Apakah yang berlaku kepada berat objek di Bulan berbanding di Bumi?","Biasanya lebih kecil","Sentiasa sama","Menjadi sifar bagi semua objek","Sentiasa lebih besar",0,"Medan graviti Bulan lebih lemah daripada Bumi.","Berat objek di Bulan sentiasa sama dengan di Bumi."],
+["Apakah yang dimaksudkan dengan medan graviti?","Kawasan yang mempunyai daya elektrik sahaja","Kawasan di mana jisim mengalami daya graviti","Kawasan tanpa graviti","Kawasan yang hanya mengandungi cahaya",1,"Medan graviti ialah kawasan di mana objek berjisim mengalami daya graviti.","Medan graviti ialah kawasan tanpa daya graviti."],
+["Jika jisim objek digandakan dan nilai g kekal, apakah berlaku kepada berat?","Menjadi separuh","Kekal sama","Menjadi dua kali ganda","Menjadi sifar",2,"W = mg; apabila m berganda, W turut berganda.","Jika jisim berganda, berat menjadi separuh."]
+]},
+{
+tingkatan:4,nama:"4. Haba",
+nota:"Haba ialah pemindahan tenaga akibat perbezaan suhu. Suhu berkaitan dengan keadaan terma bahan. Muatan haba tentu dan haba pendam tentu menerangkan tenaga yang diperlukan untuk perubahan suhu atau keadaan jirim.",
+formula:"Q = mcΔθ • Q = ml",
+qs:[
+["Apakah unit SI bagi muatan haba tentu?","J kg⁻¹ °C⁻¹","J kg","W m⁻¹","N kg⁻¹",0,"Unit c ialah J kg⁻¹ °C⁻¹.","Unit muatan haba tentu ialah J kg."],
+["Berapakah haba untuk memanaskan 2 kg air sebanyak 5°C jika c = 4 200 J kg⁻¹ °C⁻¹?","4 200 J","10 500 J","42 000 J","84 000 J",3,"Q = mcΔθ = 2 × 4200 × 5 = 42 000 J. Jawapan yang betul ialah 42 000 J.","Q = mcΔθ untuk data ini ialah 21 000 J."],
+["Semasa peleburan ais tulen, apakah berlaku kepada suhunya ketika perubahan keadaan berlangsung?","Meningkat berterusan","Kekal malar","Menurun berterusan","Menjadi sentiasa 100°C",1,"Tenaga digunakan untuk perubahan keadaan, maka suhu kekal malar ketika peleburan berlaku.","Suhu ais tulen mesti meningkat berterusan ketika sedang melebur."],
+["Apakah cara pemindahan haba yang boleh berlaku melalui vakum?","Konduksi sahaja","Perolakan sahaja","Sinaran","Konduksi dan perolakan sahaja",2,"Sinaran tidak memerlukan medium.","Perolakan boleh berlaku melalui vakum."],
+["Apakah formula haba pendam tentu?","Q = mcΔθ","P = IV","Q = ml","F = ma",2,"Q = ml, dengan l ialah haba pendam tentu.","Haba pendam tentu dikira menggunakan F = ma."]
+]},
+{
+tingkatan:4,nama:"5. Gelombang",
+nota:"Gelombang memindahkan tenaga tanpa pemindahan bersih jirim. Kuantiti penting termasuk amplitud, panjang gelombang, frekuensi, tempoh dan laju gelombang. Gelombang boleh mengalami pantulan, pembiasan, pembelauan dan interferens.",
+formula:"v = fλ • f = 1/T",
+qs:[
+["Apakah unit SI bagi frekuensi?","Meter","Hertz","Saat","Newton",1,"Frekuensi diukur dalam hertz (Hz).","Frekuensi diukur dalam saat."],
+["Gelombang mempunyai frekuensi 5 Hz dan panjang gelombang 2 m. Berapakah lajunya?","2.5 m s⁻¹","7 m s⁻¹","10 m s⁻¹","20 m s⁻¹",2,"v = fλ = 5 × 2 = 10 m s⁻¹.","Laju gelombang ialah 7 m s⁻¹."],
+["Apakah hubungan antara frekuensi dan tempoh?","f = T","f = 1/T","f = T²","f = 2T",1,"Frekuensi ialah songsangan tempoh.","Frekuensi sama dengan tempoh didarab dua."],
+["Fenomena apakah berlaku apabila gelombang membelok melalui celah sempit?","Pembelauan","Pengewapan","Peleburan","Pengionan",0,"Pembelauan ialah penyebaran atau pembelokan gelombang melalui celah atau di sekeliling halangan.","Pembelauan ialah perubahan cecair menjadi gas."],
+["Apakah yang berlaku kepada tenaga apabila amplitud gelombang bertambah?","Tenaga sentiasa menjadi sifar","Tenaga biasanya bertambah","Frekuensi semestinya sifar","Panjang gelombang semestinya sifar",1,"Bagi banyak gelombang, tenaga berkait dengan kuasa dua amplitud.","Apabila amplitud bertambah, tenaga mesti menjadi sifar."]
+]},
+{
+tingkatan:4,nama:"6. Cahaya dan Optik",
+nota:"Cahaya boleh dipantulkan dan dibiaskan. Hukum pantulan menyatakan sudut tuju sama dengan sudut pantulan. Pembiasan berlaku apabila cahaya berubah laju ketika memasuki medium berlainan. Kanta membentuk imej.",
+formula:"n = sin i/sin r • Pembesaran = tinggi imej/tinggi objek",
+qs:[
+["Apakah hukum pantulan cahaya?","Sudut tuju sama dengan sudut pantulan","Sudut tuju sentiasa sifar","Cahaya tidak boleh dipantulkan","Sudut pantulan sentiasa 90°",0,"Sudut tuju sama dengan sudut pantulan.","Sudut tuju sentiasa dua kali sudut pantulan."],
+["Cahaya memasuki medium lebih tumpat secara optik pada sudut tuju bukan sifar. Sinar dibiaskan biasanya...","Menjauhi normal","Menghampiri normal","Bergerak sepanjang permukaan dalam semua keadaan","Tidak berubah arah dalam semua keadaan",1,"Cahaya membelok menghampiri normal apabila memasuki medium lebih tumpat secara optik.","Cahaya sentiasa menjauhi normal apabila memasuki medium lebih tumpat."],
+["Apakah unit kuasa kanta?","Watt","Diopter","Joule","Pascal",1,"Kuasa kanta diukur dalam diopter (D).","Kuasa kanta diukur dalam pascal."],
+["Apakah jenis kanta yang menumpukan sinar selari kepada fokus sebenar?","Kanta cekung","Kanta mencapah","Kanta cembung","Cermin satah",2,"Kanta cembung ialah kanta menumpu.","Kanta cekung menumpukan semua sinar selari kepada fokus sebenar."],
+["Jika sudut tuju ialah 35°, berapakah sudut pantulan?","25°","35°","55°","70°",1,"Sudut tuju = sudut pantulan = 35°.","Sudut pantulan ialah 70°."]
+]},
+{
+tingkatan:5,nama:"1. Daya dan Gerakan II",
+nota:"Topik ini melibatkan momentum, impuls, keabadian momentum dan gerakan membulat. Impuls ialah perubahan momentum dan daya purata berkait dengan perubahan momentum dalam selang masa.",
+formula:"p = mv • Impuls = Ft = Δp • a = v²/r",
+qs:[
+["Apakah unit momentum?","kg m s⁻¹","kg m s⁻²","J kg⁻¹","N m⁻¹",0,"Momentum p = mv; unitnya kg m s⁻¹.","Momentum diukur dalam kg m s⁻²."],
+["Bola berjisim 0.5 kg bergerak pada 8 m s⁻¹. Berapakah momentumnya?","0.0625 kg m s⁻¹","4 kg m s⁻¹","8.5 kg m s⁻¹","16 kg m s⁻¹",1,"p = mv = 0.5 × 8 = 4 kg m s⁻¹.","Momentum bola ialah 8.5 kg m s⁻¹."],
+["Impuls sama dengan...","Perubahan tenaga keupayaan sahaja","Perubahan momentum","Jisim dibahagi masa","Halaju dibahagi jarak",1,"Impuls sama dengan perubahan momentum.","Impuls ialah jisim dibahagi masa."],
+["Mengapakah beg udara mengurangkan kecederaan semasa pelanggaran?","Meningkatkan perubahan momentum","Memanjangkan masa hentaman lalu mengurangkan daya purata","Menambah jisim penumpang","Menghapuskan momentum",1,"Bagi perubahan momentum sama, masa lebih panjang mengurangkan daya purata.","Beg udara memendekkan masa hentaman dan meningkatkan daya."],
+["Objek bergerak membulat pada laju seragam. Arah halajunya...","Sentiasa tetap","Berubah secara berterusan","Sentiasa sifar","Tidak mempunyai arah",1,"Halaju ialah kuantiti vektor; arahnya berubah dalam gerakan membulat.","Halaju objek membulat sentiasa mempunyai arah tetap."]
+]},
+{
+tingkatan:5,nama:"2. Tekanan",
+nota:"Tekanan ialah daya normal per unit luas. Tekanan cecair bertambah dengan kedalaman, ketumpatan cecair dan kekuatan medan graviti. Prinsip Pascal dan Prinsip Archimedes mempunyai aplikasi dalam sistem hidraulik dan daya apungan.",
+formula:"P = F/A • Tekanan cecair, P = ρgh",
+qs:[
+["Apakah unit SI bagi tekanan?","Newton","Joule","Pascal","Watt",2,"Tekanan diukur dalam pascal (Pa).","Tekanan diukur dalam joule."],
+["Daya 100 N bertindak pada luas 0.5 m². Berapakah tekanan?","50 Pa","100 Pa","200 Pa","500 Pa",2,"P = F/A = 100/0.5 = 200 Pa.","Tekanan ialah 50 Pa."],
+["Tekanan cecair bertambah apabila...","Kedalaman bertambah","Kedalaman berkurang","Ketumpatan menjadi sifar","Graviti menjadi sifar",0,"P = ρgh; tekanan meningkat apabila kedalaman bertambah.","Tekanan cecair sentiasa berkurang apabila kedalaman bertambah."],
+["Prinsip Pascal digunakan dalam...","Sistem brek hidraulik","Termometer klinikal sahaja","Jam randik","Sel suria sahaja",0,"Tekanan yang dikenakan pada bendalir tertutup dipindahkan ke seluruh bendalir.","Sistem hidraulik tidak menggunakan tekanan bendalir."],
+["Daya apungan pada objek terendam berkait dengan...","Berat cecair yang disesarkan","Warna objek","Suhu bilik sahaja","Luas bayang objek",0,"Prinsip Archimedes: daya apungan sama dengan berat bendalir yang disesarkan.","Daya apungan sama dengan warna bendalir yang disesarkan."]
+]},
+{
+tingkatan:5,nama:"3. Elektrik",
+nota:"Arus ialah kadar aliran cas. Beza keupayaan ialah tenaga dipindahkan per unit cas. Rintangan bergantung pada ciri konduktor. Litar siri dan selari mempunyai ciri arus, voltan dan rintangan yang berbeza.",
+formula:"I = Q/t • V = IR • P = VI • E = VQ",
+qs:[
+["Apakah unit SI bagi arus elektrik?","Ampere","Volt","Ohm","Coulomb per meter",0,"Arus elektrik diukur dalam ampere (A).","Arus elektrik diukur dalam volt."],
+["Cas 12 C mengalir dalam 3 s. Berapakah arus?","0.25 A","4 A","9 A","36 A",1,"I = Q/t = 12/3 = 4 A.","Arus ialah 36 A."],
+["Rintangan 6 Ω disambungkan kepada voltan 12 V. Berapakah arus?","0.5 A","2 A","6 A","72 A",1,"I = V/R = 12/6 = 2 A.","Arus ialah 72 A."],
+["Dalam litar siri, arus pada setiap komponen ideal adalah...","Sama","Sentiasa sifar","Berbeza mengikut warna wayar","Dua kali ganda selepas setiap perintang",0,"Arus sama mengalir melalui komponen litar siri.","Arus bertambah dua kali ganda selepas setiap perintang siri."],
+["Apakah unit kuasa elektrik?","Ohm","Coulomb","Watt","Tesla",2,"Kuasa elektrik diukur dalam watt (W).","Kuasa elektrik diukur dalam coulomb."]
+]},
+{
+tingkatan:5,nama:"4. Keelektromagnetan",
+nota:"Arus elektrik menghasilkan medan magnet. Aruhan elektromagnet berlaku apabila fluks magnet yang memaut gegelung berubah. Transformer menggunakan aruhan elektromagnet untuk mengubah voltan arus ulang-alik.",
+formula:"Vp/Vs = Np/Ns • Kuasa ideal: VpIp = VsIs",
+qs:[
+["Apakah yang berlaku di sekeliling wayar apabila arus mengalir?","Medan magnet terbentuk","Graviti hilang","Jisim wayar menjadi sifar","Suhu sentiasa sifar",0,"Arus elektrik menghasilkan medan magnet di sekeliling konduktor.","Arus elektrik menghapuskan medan magnet dalam semua keadaan."],
+["Transformer berfungsi menggunakan...","Arus terus sahaja","Arus ulang-alik","Cahaya sahaja","Bahan radioaktif sahaja",1,"Transformer memerlukan perubahan fluks magnet, biasanya daripada arus ulang-alik.","Transformer biasa berfungsi dengan arus terus yang malar sahaja."],
+["Transformer mempunyai 100 lilitan primer dan 500 lilitan sekunder. Jika Vp = 12 V, berapakah Vs ideal?","2.4 V","12 V","60 V","600 V",2,"Vs/Vp = Ns/Np = 500/100 = 5; Vs = 60 V.","Voltan sekunder ideal ialah 2.4 V."],
+["Cara meningkatkan aruhan elektromagnet dalam gegelung ialah...","Mengurangkan perubahan fluks magnet","Menggerakkan magnet relatif kepada gegelung dengan lebih pantas","Menghapuskan gegelung","Menggunakan fluks yang sentiasa tidak berubah",1,"Kadar perubahan fluks yang lebih tinggi menghasilkan emf aruhan lebih besar.","Fluks magnet yang tidak berubah menghasilkan emf aruhan maksimum."],
+["Transformer injak naik mempunyai...","Lilitan sekunder kurang daripada primer","Lilitan sekunder lebih banyak daripada primer","Tiada gegelung","Voltan keluaran sentiasa sifar",1,"Transformer injak naik menaikkan voltan dan mempunyai Ns > Np.","Transformer injak naik mempunyai lilitan sekunder lebih sedikit."]
+]},
+{
+tingkatan:5,nama:"5. Elektronik",
+nota:"Semikonduktor mempunyai sifat elektrik antara konduktor dan penebat. Diod membenarkan arus mengalir terutamanya dalam satu arah. Transistor boleh bertindak sebagai suis atau penguat dalam litar elektronik.",
+formula:"Arus konvensional melalui diod pincang hadapan • Semak simbol dan terminal komponen",
+qs:[
+["Apakah fungsi asas diod semikonduktor?","Membenarkan arus dalam satu arah utama","Menyimpan bahan api","Mengukur jisim","Menghasilkan graviti",0,"Diod mengalirkan arus dengan mudah apabila dipincang hadapan.","Diod biasa mengalirkan arus yang sama mudah dalam kedua-dua arah."],
+["Apakah fungsi transistor dalam litar elektronik?","Suis atau penguat","Termometer sahaja","Cermin pemantul","Penebat mutlak",0,"Transistor boleh digunakan sebagai suis atau penguat.","Transistor hanya digunakan untuk mengukur panjang."],
+["Dalam diod silikon pincang hadapan, diod biasanya...","Mengalirkan arus dengan lebih mudah","Sentiasa memutuskan litar","Menjadi bateri","Menghasilkan tekanan cecair",0,"Pincang hadapan membolehkan diod mengalirkan arus apabila voltan mencukupi.","Diod pincang hadapan sentiasa menyekat semua arus."],
+["Apakah bahan utama bagi kebanyakan komponen semikonduktor?","Kayu","Silikon","Getah sahaja","Kertas",1,"Silikon ialah bahan semikonduktor yang lazim digunakan.","Kayu ialah bahan utama bagi kebanyakan cip semikonduktor."],
+["Apakah maksud transistor bertindak sebagai suis?","Mengawal keadaan hidup dan mati arus dalam litar","Mengukur suhu tanpa litar","Menukar semua arus kepada graviti","Menghapuskan cas elektrik",0,"Transistor boleh mengawal arus untuk mewakili keadaan hidup atau mati.","Transistor sebagai suis tidak dapat mengawal arus."]
+]},
+{
+tingkatan:5,nama:"6. Fizik Nuklear",
+nota:"Nukleus mengandungi proton dan neutron. Pereputan radioaktif ialah proses spontan. Separuh hayat ialah masa untuk bilangan nukleus radioaktif yang belum mereput atau aktiviti menjadi separuh daripada nilai awal.",
+formula:"N = N₀(1/2)^(t/T½) • Bilangan neutron = nombor nukleon − nombor proton",
+qs:[
+["Zarah manakah mempunyai cas positif?","Neutron","Proton","Elektron","Foton",1,"Proton mempunyai cas positif.","Neutron mempunyai cas positif."],
+["Sampel mempunyai 80 g bahan radioaktif. Selepas satu separuh hayat, berapakah jisim bahan belum mereput?","20 g","40 g","60 g","80 g",1,"Selepas satu separuh hayat, kuantiti tinggal separuh: 80/2 = 40 g.","Selepas satu separuh hayat, 80 g menjadi 60 g."],
+["Nukleus mempunyai nombor nukleon 23 dan nombor proton 11. Berapakah bilangan neutron?","11","12","23","34",1,"Neutron = 23 − 11 = 12.","Bilangan neutron ialah 34."],
+["Apakah sifat utama pereputan radioaktif?","Spontan dan rawak bagi nukleus individu","Boleh dihentikan sepenuhnya dengan menyejukkan bahan","Sentiasa memerlukan cahaya matahari","Berlaku hanya dalam air",0,"Pereputan radioaktif berlaku secara spontan dan rawak.","Pereputan radioaktif boleh dihentikan sepenuhnya dengan menyejukkan bahan."],
+["Apakah sinaran yang mempunyai kuasa penembusan paling tinggi antara alfa, beta dan gama?","Alfa","Beta","Gama","Semuanya sama",2,"Secara umum, sinaran gama mempunyai kuasa penembusan paling tinggi.","Sinaran alfa mempunyai kuasa penembusan paling tinggi."]
+]},
+{
+tingkatan:5,nama:"7. Fizik Kuantum",
+nota:"Fizik kuantum mengkaji interaksi tenaga dan jirim pada skala mikroskopik. Kesan fotoelektrik menunjukkan tenaga cahaya dipindahkan dalam paket yang disebut foton. Frekuensi cahaya mempengaruhi tenaga foton.",
+formula:"E = hf • c = fλ",
+qs:[
+["Apakah nama paket tenaga cahaya?","Proton","Foton","Neutron","Ion",1,"Paket tenaga elektromagnet dipanggil foton.","Paket tenaga cahaya dipanggil neutron."],
+["Apakah unit SI bagi tenaga foton?","Hertz","Joule","Meter","Ampere",1,"Tenaga diukur dalam joule (J).","Tenaga foton diukur dalam hertz."],
+["Jika frekuensi foton meningkat, tenaga foton...","Berkurang","Kekal sifar","Bertambah","Sentiasa kekal sama",2,"E = hf; tenaga berkadar terus dengan frekuensi.","Tenaga foton berkurang apabila frekuensi meningkat."],
+["Apakah yang ditunjukkan oleh kesan fotoelektrik?","Cahaya boleh memindahkan tenaga kepada elektron dalam bahan","Cahaya tidak membawa tenaga","Elektron tiada cas","Semua logam telus kepada semua cahaya",0,"Kesan fotoelektrik melibatkan pembebasan elektron apabila cahaya sesuai menyinari permukaan.","Kesan fotoelektrik membuktikan cahaya tidak membawa tenaga."],
+["Apakah unit bagi pemalar Planck h?","J s","N kg⁻¹","kg m⁻³","W m⁻²",0,"Daripada E = hf, unit h ialah joule saat (J s).","Unit pemalar Planck ialah kilogram per meter padu."]
+]}
+];
 
-  gelombang: {
-    nama: "Gelombang",
-    nota: `
-      <h2>Nota Ringkas: Gelombang</h2>
-      <p>Gelombang memindahkan tenaga dari satu tempat
-      ke tempat lain tanpa pemindahan jirim secara keseluruhan.</p>
-      <p class="formula">v = fλ</p>
-      <ul>
-        <li>v: laju gelombang (m s⁻¹)</li>
-        <li>f: frekuensi (Hz)</li>
-        <li>λ: panjang gelombang (m)</li>
-      </ul>
-      <p><b>Ingat:</b> Frekuensi ialah bilangan ayunan
-      lengkap sesaat.</p>`,
-    soalan: [
-      {
-        q: "Apakah unit SI bagi frekuensi?",
-        pilihan: ["Hertz", "Meter", "Meter sesaat"],
-        betul: 0,
-        sebab: "Frekuensi diukur dalam hertz (Hz)."
-      },
-      {
-        q: "Gelombang mempunyai frekuensi 5 Hz dan panjang gelombang 2 m. Berapakah lajunya?",
-        pilihan: ["2.5 m s⁻¹", "7 m s⁻¹", "10 m s⁻¹"],
-        betul: 2,
-        sebab: "v = fλ = 5 × 2 = 10 m s⁻¹."
-      }
-    ]
-  },
+const KEY="fizikMukahRekodV1";
+let data={profil:{nama:"",kelas:""},skor:{}};
+let topikSemasa=0, soalanSemasa=[], indeks=0, pilihanDipilih=null, sudahSemak=false, betul=0;
 
-  elektrik: {
-    nama: "Elektrik",
-    nota: `
-      <h2>Nota Ringkas: Elektrik</h2>
-      <p>Hukum Ohm menghubungkan beza keupayaan,
-      arus dan rintangan apabila suhu serta keadaan
-      fizikal konduktor kekal.</p>
-      <p class="formula">V = IR</p>
-      <ul>
-        <li>V: beza keupayaan (volt, V)</li>
-        <li>I: arus elektrik (ampere, A)</li>
-        <li>R: rintangan (ohm, Ω)</li>
-      </ul>
-      <p><b>Ingat:</b> Ammeter disambung secara siri;
-      voltmeter disambung secara selari.</p>`,
-    soalan: [
-      {
-        q: "Apakah alat untuk mengukur arus elektrik?",
-        pilihan: ["Voltmeter", "Ammeter", "Termometer"],
-        betul: 1,
-        sebab: "Ammeter digunakan untuk mengukur arus elektrik."
-      },
-      {
-        q: "Rintangan 4 Ω disambung pada beza keupayaan 12 V. Berapakah arus?",
-        pilihan: ["3 A", "8 A", "48 A"],
-        betul: 0,
-        sebab: "I = V/R = 12/4 = 3 A."
-      }
-    ]
-  },
-
-  nuklear: {
-    nama: "Fizik Nuklear",
-    nota: `
-      <h2>Nota Ringkas: Fizik Nuklear</h2>
-      <p>Radioaktiviti ialah proses spontan nukleus
-      tidak stabil memancarkan sinaran.</p>
-      <ul>
-        <li>Alfa: zarah yang terdiri daripada 2 proton
-        dan 2 neutron.</li>
-        <li>Beta: dalam pereputan beta negatif, neutron
-        bertukar menjadi proton dan elektron dipancarkan.</li>
-        <li>Gama: sinaran elektromagnet bertenaga tinggi.</li>
-      </ul>
-      <p><b>Ingat:</b> Sinaran alfa mempunyai kuasa
-      penembusan yang rendah berbanding beta dan gama.</p>`,
-    soalan: [
-      {
-        q: "Sinaran manakah terdiri daripada 2 proton dan 2 neutron?",
-        pilihan: ["Alfa", "Beta negatif", "Gama"],
-        betul: 0,
-        sebab: "Zarah alfa mempunyai 2 proton dan 2 neutron."
-      },
-      {
-        q: "Antara berikut, yang manakah sinaran elektromagnet?",
-        pilihan: ["Alfa", "Beta", "Gama"],
-        betul: 2,
-        sebab: "Sinar gama ialah sinaran elektromagnet."
-      }
-    ]
-  }
-};
-
-let semasa = "haba";
-
-function paparTopik(id) {
-  semasa = id;
-  document.getElementById("nota").innerHTML =
-    topik[id].nota;
-
-  const ruang = document.getElementById("latihan");
-  ruang.innerHTML =
-    "<h2>Kuiz: " + topik[id].nama + "</h2>" +
-    "<p>Pilih satu jawapan bagi setiap soalan.</p>" +
-    topik[id].soalan.map((s, i) => `
-      <div class="question">
-        <p><b>${i + 1}. ${s.q}</b></p>
-        ${s.pilihan.map((p, j) => `
-          <label class="option">
-            <input type="radio" name="jawapan${i}" value="${j}">
-            ${p}
-          </label>
-        `).join("")}
-        <p id="maklum${i}"></p>
-      </div>
-    `).join("") +
-    '<button id="semak">Semak Jawapan</button>' +
-    '<p id="result" aria-live="polite"></p>';
-
-  document.getElementById("semak").addEventListener(
-    "click", semakKuiz
-  );
+function bacaData(){
+ try{const s=localStorage.getItem(KEY);if(s)data=JSON.parse(s)}catch(e){}
+ document.getElementById("nama").value=data.profil.nama||"";
+ document.getElementById("kelas").value=data.profil.kelas||"";
 }
-
-function semakKuiz() {
-  const soalan = topik[semasa].soalan;
-  let markah = 0;
-  let belum = 0;
-
-  soalan.forEach((s, i) => {
-    const dipilih = document.querySelector(
-      'input[name="jawapan' + i + '"]:checked'
-    );
-    const maklum = document.getElementById("maklum" + i);
-
-    if (!dipilih) {
-      belum++;
-      maklum.textContent = "Belum dijawab.";
-    } else if (Number(dipilih.value) === s.betul) {
-      markah++;
-      maklum.textContent = "Betul! " + s.sebab;
-    } else {
-      maklum.textContent =
-        "Belum tepat. Jawapan: " +
-        s.pilihan[s.betul] + ". " + s.sebab;
-    }
-  });
-
-  const result = document.getElementById("result");
-  if (belum > 0) {
-    result.textContent =
-      "Sila jawab semua soalan. Belum dijawab: " + belum;
-  } else {
-    result.textContent =
-      "Markah " + topik[semasa].nama + ": " +
-      markah + "/" + soalan.length + " (" +
-      Math.round(markah / soalan.length * 100) + "%).";
-  }
+function simpanData(){localStorage.setItem(KEY,JSON.stringify(data))}
+function simpanProfil(){
+ data.profil={nama:document.getElementById("nama").value.trim(),kelas:document.getElementById("kelas").value.trim()};
+ simpanData();document.getElementById("profilMsg").textContent="Profil disimpan pada peranti ini.";
 }
-
-document.querySelectorAll("[data-topic]").forEach(b => {
-  b.addEventListener("click", () => paparTopik(b.dataset.topic));
-});
-
-paparTopik("haba");
+function binaPilihanTopik(){
+ const el=document.getElementById("pilihTopik");el.innerHTML="";
+ topik.forEach((t,i)=>{const o=document.createElement("option");o.value=i;o.textContent="Tingkatan "+t.tingkatan+" — "+t.nama;el.appendChild(o)});
+}
+function paparTopik(){
+ topikSemasa=Number(document.getElementById("pilihTopik").value);
+ const t=topik[topikSemasa], s=data.skor[topikSemasa];
+ document.getElementById("nota").innerHTML=
+ `<div class="topic"><span class="tag">TINGKATAN ${t.tingkatan}</span><h3>${t.nama}</h3>
+ <p>${t.nota}</p><p><b>Formula penting:</b> ${t.formula}</p>
+ <p class="small">Latihan: 10 item • Pilihan jawapan dan semakan pernyataan</p>
+ ${s?`<p><b>Markah terbaik:</b> ${s.markah}% — ${status(s.markah)}</p>`:"<p class='small'>Anda belum merekodkan keputusan bagi topik ini.</p>"}</div>`;
+}
+function binaSoalan(t){
+ const hasil=[];
+ t.qs.forEach(q=>{
+  hasil.push({jenis:"mcq",q:q[0],ops:q.slice(1,5),jawapan:Number(q[5]),huraian:q[6]});
+  hasil.push({jenis:"tf",q:"Betul atau salah: "+q[7],ops:["Betul","Salah"],jawapan:1,huraian:"Pernyataan itu salah. "+q[6]});
+ });
+ return hasil.sort(()=>Math.random()-.5);
+}
+function mulaKuiz(){
+ simpanProfil();
+ topikSemasa=Number(document.getElementById("pilihTopik").value);
+ soalanSemasa=binaSoalan(topik[topikSemasa]);indeks=0;betul=0;
+ document.getElementById("ruangKuiz").classList.remove("hidden");
+ document.getElementById("keputusan").classList.add("hidden");
+ paparSoalan();document.getElementById("ruangKuiz").scrollIntoView({behavior:"smooth"});
+}
+function paparSoalan(){
+ pilihanDipilih=null;sudahSemak=false;
+ const q=soalanSemasa[indeks];
+ document.getElementById("nomborSoalan").textContent=`Soalan ${indeks+1} daripada ${soalanSemasa.length}`;
+ document.getElementById("barKuiz").style.width=(indeks/soalanSemasa.length*100)+"%";
+ document.getElementById("soalan").textContent=q.q;
+ const p=document.getElementById("pilihan");p.innerHTML="";
+ q.ops.forEach((op,i)=>{
+  const b=document.createElement("button");b.className="option";b.textContent=String.fromCharCode(65+i)+". "+op;
+  b.onclick=()=>{if(sudahSemak)return;pilihanDipilih=i;document.querySelectorAll(".option").forEach(x=>x.classList.remove("chosen"));b.classList.add("chosen")};
+  p.appendChild(b);
+ });
+ document.getElementById("maklumBalas").classList.add("hidden");
+ document.getElementById("semakBtn").classList.remove("hidden");
+ document.getElementById("seterusnyaBtn").classList.add("hidden");
+}
+function semakJawapan(){
+ if(pilihanDipilih===null){alert("Sila pilih satu jawapan dahulu.");return}
+ sudahSemak=true;const q=soalanSemasa[indeks], ok=pilihanDipilih===q.jawapan;
+ if(ok)betul++;
+ document.querySelectorAll(".option").forEach((b,i)=>{
+  b.disabled=true;
+  if(i===q.jawapan)b.style.border="2px solid #16804a";
+ });
+ const fb=document.getElementById("maklumBalas");fb.classList.remove("hidden");
+ fb.innerHTML=`<p class="${ok?"good":"bad"}">${ok?"Betul!":"Belum tepat."}</p><p><b>Jawapan:</b> ${q.ops[q.jawapan]}</p><p>${q.huraian}</p>`;
+ document.getElementById("semakBtn").classList.add("hidden");
+ document.getElementById("seterusnyaBtn").classList.remove("hidden");
+ document.getElementById("seterusnyaBtn").textContent=indeks===soalanSemasa.length-1?"Lihat keputusan":"Soalan seterusnya →";
+}
+function seterusnya(){
+ if(!sudahSemak)return;
+ indeks++;
+ if(indeks<soalanSemasa.length){paparSoalan();return}
+ paparKeputusan();
+}
+function paparKeputusan(){
+ document.getElementById("ruangKuiz").classList.add("hidden");
+ document.getElementById("keputusan").classList.remove("hidden");
+ const markah=Math.round(betul/soalanSemasa.length*100);
+ const lama=data.skor[topikSemasa];
+ if(!lama||markah>lama.markah)data.skor[topikSemasa]={markah:markah,betul:betul,jumlah:soalanSemasa.length,tarikh:new Date().toLocaleDateString("ms-MY")};
+ else {data.skor[topikSemasa].terakhir=markah;data.skor[topikSemasa].tarikhTerakhir=new Date().toLocaleDateString("ms-MY")}
+ simpanData();paparRekod();paparTopik();
+ document.getElementById("ringkasanKeputusan").innerHTML=
+ `<h3>${topik[topikSemasa].nama}</h3><p><b>${betul} / ${soalanSemasa.length} betul</b></p>
+ <h2>${markah}%</h2><p>Status: <b>${status(markah)}</b></p>
+ <p>${markah>=80?"Bagus! Teruskan dengan topik seterusnya.":markah>=50?"Ulang kaji nota dan cuba latihan sekali lagi.":"Baca nota dahulu, kemudian cuba latihan semula."}</p>`;
+ document.getElementById("keputusan").scrollIntoView({behavior:"smooth"});
+}
+function status(m){return m>=80?"Menguasai":m>=50?"Perlu latihan":"Perlu bimbingan"}
+function paparRekod(){
+ let lengkap=0,total=0,html="";
+ topik.forEach((t,i)=>{
+  const s=data.skor[i];if(s){lengkap++;total+=s.markah}
+  html+=`<tr><td>T${t.tingkatan} — ${t.nama}</td><td>${s?s.markah+"%":"Belum diuji"}</td><td>${s?status(s.markah):"Belum ada rekod"}</td></tr>`;
+ });
+ document.getElementById("jadualRekod").innerHTML=html;
+ document.getElementById("ringkasanRekod").innerHTML=
+ `<p><b>Topik diuji:</b> ${lengkap} daripada ${topik.length}</p>
+ <div class="progress"><span style="width:${lengkap/topik.length*100}%"></span></div>
+ <p><b>Purata markah terbaik:</b> ${lengkap?Math.round(total/lengkap)+"%":"Belum ada data"}</p>`;
+}
+function tutupKuiz(){document.getElementById("keputusan").classList.add("hidden");document.getElementById("ruangKuiz").classList.add("hidden");document.getElementById("pilihTopik").scrollIntoView({behavior:"smooth"})}
+function muatTurunRekod(){
+ let rows=[["Nama",data.profil.nama||""],["Kelas",data.profil.kelas||""],[],["Tingkatan","Topik","Markah terbaik","Status","Tarikh"]];
+ topik.forEach((t,i)=>{const s=data.skor[i];rows.push([t.tingkatan,t.nama,s?s.markah+"%":"",s?status(s.markah):"",s?s.tarikh||"": ""])});
+ const csv=rows.map(r=>r.map(x=>'"'+String(x??"").replace(/"/g,'""')+'"').join(",")).join("\r\n");
+ const blob=new Blob(["\ufeff"+csv],{type:"text/csv;charset=utf-8;"});
+ const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="rekod-penguasaan-fizik.csv";a.click();URL.revokeObjectURL(a.href);
+}
+function resetRekod(){
+ if(!confirm("Adakah anda pasti mahu memadam semua rekod pada peranti ini? Tindakan ini tidak boleh dibatalkan."))return;
+ data={profil:data.profil,skor:{}};simpanData();paparRekod();paparTopik();
+}
+bacaData();binaPilihanTopik();paparTopik();paparRekod();
 </script>
 </body>
 </html>
